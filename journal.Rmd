@@ -83,9 +83,6 @@ sales_per_year <- bike_orderlines_joined_tbl %>%
                                      decimal.mark = ",", 
                                      prefix = "", 
                                      suffix = " €"))
-sales_per_year %>% ggplot(aes(x = year, y = sales)) + geom_col(fill = "#2DC6D6") + 
-  geom_label(aes(label = sales_text)) +
-  geom_smooth(method = "lm", se = FALSE)
 
 sales_per_year_cat <- bike_orderlines_joined_tbl %>%
   select(total_sales,order_date,category_1) %>%
@@ -96,14 +93,6 @@ sales_per_year_cat <- bike_orderlines_joined_tbl %>%
                                      decimal.mark =",",
                                      prefix="",
                                      suffix = " €"))
-  
-sales_per_year_cat %>% ggplot(aes(x = year, y = sales, fill = category_1)) + 
-  geom_col() +
-  facet_wrap(~category_1) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(title = "Revenue per year",
-       subtitle = "grouped by Category 1",
-       x = "Year", y = "Revenue")
 
 bike_orderlines_joined_tbl <- bike_orderlines_joined_tbl %>% 
   separate("location", c("city","state"),sep = ", ")
@@ -117,6 +106,21 @@ sales_per_year_state <- bike_orderlines_joined_tbl %>%
                                      decimal.mark =",",
                                      prefix="",
                                      suffix = " €"))
+```
+
+```{r}
+
+sales_per_year %>% ggplot(aes(x = year, y = sales)) + geom_col(fill = "#2DC6D6") + 
+  geom_label(aes(label = sales_text)) +
+  geom_smooth(method = "lm", se = FALSE)
+  
+sales_per_year_cat %>% ggplot(aes(x = year, y = sales, fill = category_1)) + 
+  geom_col() +
+  facet_wrap(~category_1) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Revenue per year",
+       subtitle = "grouped by Category 1",
+       x = "Year", y = "Revenue")
 
 sales_per_year_state %>% ggplot(aes(x = year, y = sales, fill = state)) + 
   geom_col() +
